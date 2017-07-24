@@ -1,6 +1,8 @@
-class path {
+class Path {
+  //PVectorの集まり
+  //描画する座標の点を管理する
   ArrayList<PVector> p;
-  path() {
+  Path() {
     p = new ArrayList<PVector>();
   }
   void addPVector(PVector v) {
@@ -18,5 +20,3 @@ class path {
     return p.get(i);
   }
 }
-
-

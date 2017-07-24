@@ -1,4 +1,5 @@
 class GL2R {
+  //拡大縮小の行列を管理する
   float a, b, c, d;
   GL2R(float _a, float _b, float _c, float _d) {
     a=_a;
@@ -13,8 +14,8 @@ class GL2R {
   PVector moveByMatrix(PVector v) {
     return new PVector(a*v.x+b*v.y, c*v.x+d*v.y);
   }
-  path moveByMatrix(path p) {
-    path q = new path();
+  Path moveByMatrix(Path p) {
+    Path q = new Path();
     for (int j=0; j<p.size(); j++) {
       q.addPVector(moveByMatrix(p.get(j)));
     }

@@ -1,7 +1,8 @@
-class plane {
+class Plane {
+  //基準線を書くだけ
   int cX, cY;
   int unit;
-  plane() {
+  Plane() {
     cX=400;
     cY=400;
     unit=50;
