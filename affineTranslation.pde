@@ -31,6 +31,8 @@ void setup() {
   myRotate(radians(90));
   myScale(2);
   myScale(0.5);
+  myTranslate(1, 1);
+  myTranslate(-1, -1);
 
   /// FMS!
   originalPath = new Path();
