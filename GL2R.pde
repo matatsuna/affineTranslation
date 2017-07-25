@@ -1,6 +1,8 @@
 class GL2R {
   //拡大縮小の行列を管理する
   float a, b, c, d;
+  GL2R() {
+  }
   GL2R(float _a, float _b, float _c, float _d) {
     a=_a;
     b=_b;

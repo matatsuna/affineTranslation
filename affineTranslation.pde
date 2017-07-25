@@ -2,22 +2,30 @@ ArrayList<Path> originalFigure ;
 Path originalPath;
 ArrayList<Path> translatedFigure ;
 
+ArrayList<GL2R> matrixs;
+
 GL2R matrix1=new GL2R(
-  1, -2, 1, 1
+  1, 2, 1, -1
   );
 
 GL2R matrix2=new GL2R(
-  1, 2, 1, -1
+  1, -2, 1, 1
   );
+
 
 Plane myp;
 
 void setup() {
   size(800, 800);
+
+  matrixs = new ArrayList<GL2R>();
+
   myp=new Plane();
   originalFigure = new ArrayList<Path>();
   translatedFigure = new ArrayList<Path>();
 
+  myRotate(radians(-90));
+  myRotate(radians(90));
   /// FMS!
   originalPath = new Path();
   originalPath.addPVector(new PVector(0, 0));
@@ -50,7 +58,25 @@ void setup() {
 
 void draw() {
 
-  GL2R matrix = prod(matrix2, matrix1);
+  //行列の計算
+  GL2R matrix = new GL2R();
+  println("行列のサイズ:", matrixs.size());
+  if (matrixs.size() == 0) {
+    matrix = new GL2R(1, 0, 0, 1);
+  } else if (matrixs.size() == 1) {
+
+    matrix = matrixs.get(0);
+  } else if (matrixs.size()>1) {
+    for (int i=0; i<matrixs.size()-1; i++) {
+      if (i==0) {
+        matrix = prod(matrixs.get(0), matrixs.get(1));
+      } else {
+        matrix = prod(matrix, matrixs.get(i+1));
+      }
+    }
+  }
+
+  //matrix = prod(matrix1, matrix2);
 
   background(0);
   myp.drawAxis();
