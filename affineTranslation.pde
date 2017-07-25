@@ -4,18 +4,6 @@ ArrayList<Path> translatedFigure ;
 
 ArrayList<GL3R> matrixs;
 
-GL3R matrix1=new GL3R(
-  1, 2, 0, 
-  1, -1, 0, 
-  0, 0, 1
-  );
-
-GL3R matrix2=new GL3R(
-  1, -2, 0, 
-  1, 1, 0, 
-  0, 0, 1
-  );
-
 Plane myp;
 
 void setup() {
@@ -34,34 +22,7 @@ void setup() {
   myTranslate(1, 1);
   myTranslate(-1, -1);
 
-  /// FMS!
-  originalPath = new Path();
-  originalPath.addPVector(new PVector(0, 0));
-  originalPath.addPVector(new PVector(0, 1));
-  originalPath.addPVector(new PVector(1, 1));
-  originalFigure.add(originalPath);
-
-  originalPath = new Path();
-  originalPath.addPVector(new PVector(0, 0.5));
-  originalPath.addPVector(new PVector(0.8, 0.5));
-  originalFigure.add(originalPath);
-
-  originalPath = new Path();
-  originalPath.addPVector(new PVector(1.1, 0));
-  originalPath.addPVector(new PVector(1.1, 1));
-  originalPath.addPVector(new PVector(1.6, 0.5));
-  originalPath.addPVector(new PVector(2.1, 1));
-  originalPath.addPVector(new PVector(2.1, 0));
-  originalFigure.add(originalPath);
-
-  originalPath = new Path();
-  originalPath.addPVector(new PVector(3.2, 1));
-  originalPath.addPVector(new PVector(2.2, 1));
-  originalPath.addPVector(new PVector(2.2, 0.5));
-  originalPath.addPVector(new PVector(3.2, 0.5));
-  originalPath.addPVector(new PVector(3.2, 0));
-  originalPath.addPVector(new PVector(2.2, 0));
-  originalFigure.add(originalPath);
+  setFMS();
 }
 
 void draw() {
@@ -112,4 +73,34 @@ void draw() {
   for (Path path : translatedFigure) {
     path.drawPath();
   }
+}
+void setFMS() {
+  /// FMS!のsetup追加
+  originalPath = new Path();
+  originalPath.addPVector(new PVector(0, 0));
+  originalPath.addPVector(new PVector(0, 1));
+  originalPath.addPVector(new PVector(1, 1));
+  originalFigure.add(originalPath);
+
+  originalPath = new Path();
+  originalPath.addPVector(new PVector(0, 0.5));
+  originalPath.addPVector(new PVector(0.8, 0.5));
+  originalFigure.add(originalPath);
+
+  originalPath = new Path();
+  originalPath.addPVector(new PVector(1.1, 0));
+  originalPath.addPVector(new PVector(1.1, 1));
+  originalPath.addPVector(new PVector(1.6, 0.5));
+  originalPath.addPVector(new PVector(2.1, 1));
+  originalPath.addPVector(new PVector(2.1, 0));
+  originalFigure.add(originalPath);
+
+  originalPath = new Path();
+  originalPath.addPVector(new PVector(3.2, 1));
+  originalPath.addPVector(new PVector(2.2, 1));
+  originalPath.addPVector(new PVector(2.2, 0.5));
+  originalPath.addPVector(new PVector(3.2, 0.5));
+  originalPath.addPVector(new PVector(3.2, 0));
+  originalPath.addPVector(new PVector(2.2, 0));
+  originalFigure.add(originalPath);
 }
