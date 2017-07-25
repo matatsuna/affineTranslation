@@ -25,6 +25,7 @@ class GL2R {
   }
 }
 
+
 GL2R prod(GL2R f, GL2R g) {
   return new GL2R(
     f.a*g.a+f.b*g.c, f.a*g.b+f.b*g.d, 

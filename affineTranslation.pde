@@ -2,23 +2,26 @@ ArrayList<Path> originalFigure ;
 Path originalPath;
 ArrayList<Path> translatedFigure ;
 
-ArrayList<GL2R> matrixs;
+ArrayList<GL3R> matrixs;
 
-GL2R matrix1=new GL2R(
-  1, 2, 1, -1
+GL3R matrix1=new GL3R(
+  1, 2, 0, 
+  1, -1, 0, 
+  0, 0, 1
   );
 
-GL2R matrix2=new GL2R(
-  1, -2, 1, 1
+GL3R matrix2=new GL3R(
+  1, -2, 0, 
+  1, 1, 0, 
+  0, 0, 1
   );
-
 
 Plane myp;
 
 void setup() {
   size(800, 800);
 
-  matrixs = new ArrayList<GL2R>();
+  matrixs = new ArrayList<GL3R>();
 
   myp=new Plane();
   originalFigure = new ArrayList<Path>();
@@ -62,10 +65,14 @@ void setup() {
 void draw() {
 
   //行列の計算
-  GL2R matrix = new GL2R();
-  println("行列のサイズ:", matrixs.size());
+  GL3R matrix = new GL3R();
+
   if (matrixs.size() == 0) {
-    matrix = new GL2R(1, 0, 0, 1);
+    matrix = new GL3R(
+      1, 0, 0, 
+      0, 1, 0, 
+      0, 0, 1
+      );
   } else if (matrixs.size() == 1) {
 
     matrix = matrixs.get(0);
