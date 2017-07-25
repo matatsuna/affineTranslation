@@ -4,4 +4,6 @@ void myRotate(float _pi) {
   matrixs.add(gl2r);
 }
 void myScale(float _rate) {
+  GL2R gl2r = new GL2R(_rate, 0, 0, _rate);
+  matrixs.add(gl2r);
 }

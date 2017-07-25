@@ -26,6 +26,9 @@ void setup() {
 
   myRotate(radians(-90));
   myRotate(radians(90));
+  myScale(2);
+  myScale(0.5);
+
   /// FMS!
   originalPath = new Path();
   originalPath.addPVector(new PVector(0, 0));
