@@ -15,9 +15,14 @@ boolean preMousePressed ;
 
 boolean log = true;
 
+int mode = 2;
+
+ArrayList<Button> stageButtons;
+
 void setup() {
   size(1200, 800);
-  buttons = setButtons();  
+  buttons = setButtons();
+  stageButtons = stageButton();
 
   matrixs = new ArrayList<GL3R>();
 
@@ -31,6 +36,145 @@ void setup() {
 
 
 void draw() {
+  if (mode == 1) {
+    top();
+  } else if (mode == 2) {
+    selectStage();
+  } else if (mode == 3) {
+    game();
+  } else if (mode == 4) {
+    score();
+  }
+}
+
+void top() {
+  background(0);
+  textAlign(CENTER);
+  textSize(50);
+  stroke(200);
+  text("affineTranslation!", width/2, height/2);
+  Button _button = new Button((width-400)/2, height/3*2, 400, 100, "SELECT STAGE", 50);
+  _button.draw();
+
+  if (mousePressed) {
+    if (log) {
+      println("mouse ok");
+    }
+    if (_button.isInside()) {
+      if (log) {
+        println("inside ok");
+      }
+      mode = 2;
+    }
+  }
+}
+
+void selectStage() {
+  background(0);
+  textAlign(CENTER);
+  textSize(50);
+  stroke(200);
+  text("SELECT STAGE", width/2, height/8);
+  Button _startButton = new Button((width-200)/2, height/5*4, 200, 100, "START", 50);
+
+
+  for (Button _stageButton : stageButtons) {
+    if (_stageButton.isInside()) {
+      _stageButton.setColor(200, 100, 100);
+    } else {
+      _stageButton.setColor(0, 0, 0);
+    }
+    if (_stageButton.selected) {
+      _stageButton.setColor(255, 0, 0);
+    }
+    _stageButton.draw();
+  }
+
+  if (_startButton.isInside()) {
+    _startButton.setColor(100, 100, 100);
+  }
+
+  if (mousePressed) {
+    if (_startButton.isInside()) {
+      for (Button _stageButton : stageButtons) {
+        if (_stageButton.selected) {
+          loadMap(_stageButton.content);
+          mode = 3;
+        }
+      }
+    }
+    for (Button _stageButton : stageButtons) {
+      _stageButton.selected = false;
+    }
+    for (Button _stageButton : stageButtons) {
+      if (_stageButton.isInside()) {
+        _stageButton.selected = true;
+      }
+    }
+  }
+  _startButton.draw();
+}
+void loadMap(String _str) {
+  if (_str.equals("1")) {
+    myTranslate(2.0, 0);
+  }
+}
+ArrayList<Button> stageButton() {
+  ArrayList<Button> _stageButtons = new ArrayList();
+
+  Button _button;
+
+  int _x = 250;
+  int _y = 200;
+  int _w = 100;
+  int _h = 100;
+
+  /*1行目*/
+  _button = new Button(_x, _y, _w, _h, "1", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50), _y, _w, _h, "2", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*2, _y, _w, _h, "3", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*3, _y, _w, _h, "4", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*4, _y, _w, _h, "5", 30);
+  _stageButtons.add(_button);
+
+
+  /*2行目*/
+  _button = new Button(_x, _y+(_h+50)*1, _w, _h, "6", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50), _y+(_h+50)*1, _w, _h, "7", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*2, _y+(_h+50)*1, _w, _h, "8", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*3, _y+(_h+50)*1, _w, _h, "9", 30);
+  _stageButtons.add(_button);
+
+  _button = new Button(_x+(_w+50)*4, _y+(_h+50)*1, _w, _h, "10", 30);
+  _stageButtons.add(_button);
+
+  /*?*/
+  _button = new Button(_x+(_w+50)*2, _y+(_h+50)*2, _w, _h, "?", 30);
+  _stageButtons.add(_button);
+
+
+  return _stageButtons;
+}
+
+void score() {
+  background(0);
+}
+
+void game() {
 
   //行列の計算
   GL3R matrix = new GL3R();
@@ -141,6 +285,9 @@ void draw() {
   }
   if (log) {
     println("すべての文字に対しての距離", distPath);
+  }
+  if (distPath < 1.0) {
+    mode = 4;
   }
 }
 ArrayList<Button> setButtons() {

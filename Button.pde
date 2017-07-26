@@ -9,6 +9,7 @@ class Button {
   int blue = 0;
   int m_iCommand = 0;
   int fontSize = 0;
+  boolean selected = false;
 
   Button( int _x, int _y, int _w, int _h, String _content, int _fontSize) {
     x = _x;
@@ -19,7 +20,7 @@ class Button {
     fontSize =  _fontSize ;
   }
 
-  void SetColor( int _r, int _g, int _b ) {
+  void setColor( int _r, int _g, int _b ) {
     red = _r;
     green = _g;
     blue = _b;
@@ -44,4 +45,5 @@ class Button {
     }
     return false;
   }
+
 }
