@@ -27,7 +27,7 @@ int scoreTime = 0;
 int[] scoreData; 
 File file;
 
-int stage;
+String stage;
 void setup() {
   size(1200, 800);
   buttons = setButtons();
@@ -40,12 +40,12 @@ void setup() {
   mouse = false;
 
   scoreData = new int [10];
-  file = new File(dataPath("scoreData.json"));
+  file = new File(sketchPath("scoreData.json"));
   if (file.exists()) {
     scoreData = loadScore(file);
   }
 
-  stage = 0;
+  stage = "0";
 }
 
 
@@ -112,6 +112,16 @@ void selectStage() {
     }
     _stageButton.draw();
   }
+  for (Button _stageButton : stageButtons) {
+    if (_stageButton.isInside()) {
+      if (!_stageButton.content.equals("?")) {
+        if (scoreData[int(_stageButton.content)-1]!=0) {
+          textSize(30);
+          text("Score:"+str(scoreData[int(_stageButton.content)-1]), mouseX+80, mouseY+40);
+        }
+      }
+    }
+  }
 
   if (_startButton.isInside()) {
     _startButton.setColor(100, 100, 100);
@@ -129,11 +139,15 @@ void selectStage() {
     if (_startButton.isInside()) {
       for (Button _stageButton : stageButtons) {
         if (_stageButton.selected) {
+          if (log) {
+            println("gameの初期化");
+          }
           //ターゲットの文字を設定する
           setFMS();
           loadMap(_stageButton.content);
-          stage = int(_stageButton.content);
+          stage = _stageButton.content;
           startTime = nowTime();
+          scoreFlag =true;
           mode = 3;
           _stageButton.selected = false;
         }
@@ -374,7 +388,9 @@ void score() {
   if (scoreFlag) {
     scoreFlag = false;
     scoreTime = nowTime() - startTime;
-    scoreData[stage-1] = scoreTime;
+    if (!stage.equals("?")) {
+      scoreData[int(stage)-1] = min(scoreData[int(stage)-1], scoreTime);
+    }
   }
   background(0);
   textAlign(CENTER);
