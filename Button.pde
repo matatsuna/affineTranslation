@@ -38,7 +38,7 @@ class Button {
     int _x = mouseX;
     int _y = mouseY;
     if ( _x >= x && _x <= x + w) {
-      if ( _y >= y && _y <= y + w ) {
+      if ( _y >= y && _y <= y + h ) {
         return true;
       }
     }

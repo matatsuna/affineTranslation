@@ -13,6 +13,8 @@ boolean mouse;
 PVector mouseClick;
 boolean preMousePressed ;
 
+boolean log = true;
+
 void setup() {
   size(1200, 800);
   buttons = setButtons();  
@@ -24,27 +26,9 @@ void setup() {
   translatedFigure = new ArrayList<Path>();
   mouse = false;
 
-  //myRotate(radians(-90));
-  //myRotate(radians(90));
-  //myScale(2);
-  //myScale(0.5);
-  //myTranslate(1, 1);
-  //myTranslate(-1, -1);
-
   setFMS();
 }
 
-//void mousePressed() {
-//  mouse = true;
-//  mouseClick = new PVector(mouseX, mouseY);
-//  println("mousePrewwd");
-//}
-
-//void mouseReleased() {
-//  mouse = false;
-//  myTranslate(mouseClick.x-mouseX, mouseClick.y-mouseY);
-//  println("mousereleaed");
-//}
 
 void draw() {
 
@@ -73,34 +57,62 @@ void draw() {
   background(0);
   myp.drawAxis();
 
+
   for (Button _button : buttons) {
     _button.draw();
-    if (!preMousePressed && mousePressed) {
-      preMousePressed = true;
+  }
+
+  if (!preMousePressed && mousePressed) {
+    preMousePressed = true;
+    for (Button _button : buttons) {
+
       if (_button.isInside()) {
 
         if (_button.content .equals("↑")) {
+          if (log) {
+            println(_button.content);
+          }
           myTranslate(0, 0.05);
-          //GL3R tmpgl3r = new GL3R(
-          //  1, 0, 0, 
-          //  0, 1, 1.0, 
-          //  0, 0, 1
-          //  );
-          //matrix = prod(matrix, tmpgl3r);
         } else if (_button.content.equals("↓")) {
+          if (log) {
+            println(_button.content);
+          }
           myTranslate(0, -0.05);
-          //GL3R tmpgl3r = new GL3R(
-          //  1, 0, 0, 
-          //  0, 1, -1.0, 
-          //  0, 0, 1
-          //  );
-          //matrix = prod(matrix, tmpgl3r);
+        } else if (_button.content.equals("←")) {
+          if (log) {
+            println(_button.content);
+          }
+          myTranslate(-0.05, 0);
+        } else if (_button.content.equals("→")) {
+          if (log) {
+            println(_button.content);
+          }
+          myTranslate(0.05, 0);
+        } else if (_button.content.equals("Left")) {
+          if (log) {
+            println(_button.content);
+          }
+          myRotate(radians(3));
+        } else if (_button.content.equals("Right")) {
+          if (log) {
+            println(_button.content);
+          }
+          myRotate(-radians(3));
+        } else if (_button.content.equals("-")) {
+          if (log) {
+            println(_button.content);
+          }
+          myScale(98.0/100.0);
+        } else if (_button.content.equals("+")) {
+          if (log) {
+            println(_button.content);
+          }
+          myScale(102.0/100.0);
         }
-        
       }
-    } else {
-      preMousePressed = false;
     }
+  } else {
+    preMousePressed = false;
   }
 
   stroke(200, 200, 255);
@@ -121,18 +133,52 @@ void draw() {
   // draw new letters
   stroke(255, 128, 128);
   strokeWeight(3);
-  for (Path path : translatedFigure) {
+  float distPath= 0;
+  for (int i = 0; i<translatedFigure.size(); i++) {
+    Path path = translatedFigure.get(i);
+    distPath += path.compareDist(originalFigure.get(i));
     path.drawPath();
+  }
+  if (log) {
+    println("すべての文字に対しての距離", distPath);
   }
 }
 ArrayList<Button> setButtons() {
   //各種ボタンの初期設定
   ArrayList<Button> _buttons = new ArrayList<Button>();
-  Button _button;
-  _button = new Button(900, 100, 100, 50, "↑", 50);
-  _buttons.add(_button);
-  _button = new Button(900, 300, 100, 50, "↓", 50);
-  _buttons.add(_button);
+  //Button _button;
+  int centerX = 1000;
+  int centerY = 200;
+  int w = 100;
+  int h = 50;
+  Button _button1 = new Button(centerX, centerY-80, w, h, "↑", 50);
+  _buttons.add(_button1);
+
+  Button _button2 = new Button(centerX, centerY+80, w, h, "↓", 50);
+  _buttons.add(_button2);
+
+  Button _button3 = new Button(centerX-50, centerY, w, h, "←", 50);
+  _buttons.add(_button3);
+
+  Button _button4 = new Button(centerX+50, centerY, w, h, "→", 50);
+  _buttons.add(_button4);
+
+  centerY = 400;
+
+  Button _button5 = new Button(centerX-50, centerY, w, h, "Left", 30);
+  _buttons.add(_button5);
+
+  Button _button6 = new Button(centerX+50, centerY, w, h, "Right", 30);
+  _buttons.add(_button6);
+
+  centerY = 500;
+
+  Button _button7 = new Button(centerX-50, centerY, w, h, "-", 50);
+  _buttons.add(_button7);
+
+  Button _button8 = new Button(centerX+50, centerY, w, h, "+", 50);
+  _buttons.add(_button8);
+
 
   return _buttons;
 }
