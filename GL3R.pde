@@ -24,7 +24,9 @@ class GL3R {
 
   PVector moveByMatrix(PVector v) {
 
-    return new PVector(a*v.x+b*v.y+c, d*v.x+e*v.y+f);
+    return new PVector(
+    a*v.x+b*v.y+c, d*v.x+e*v.y+f
+    );
   }
 
   Path moveByMatrix(Path p) {
