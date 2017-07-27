@@ -1,3 +1,8 @@
+/*
+
+ affineTranslation.pde
+ */
+ 
 ArrayList<Path> originalFigure ;
 Path originalPath;
 ArrayList<Path> translatedFigure ;
@@ -75,7 +80,7 @@ void top()
 {
   background(0);
   textAlign(CENTER);
-  textSize(50);
+  textSize(100);
   stroke(200);
   text("affineTranslation!", width/2, height/4);
   Button _button = new Button(
@@ -123,7 +128,22 @@ void top()
 void help()
 {
   background(0);
-  //ここを書く
+  textAlign(CENTER);
+  textSize(50);
+  stroke(200);
+  text("Developer:@matatsuna", width/2, height/2);
+  Button _button = new Button(
+    (width-400)/2, height/5*4, 400, 100, "BACK", 50
+    );
+  if (_button.isInside())
+  {
+    _button.setColor(100, 100, 100);
+    if (mousePressed)
+    {
+      mode = 1;
+    }
+  }
+  _button.draw();
 }
 
 
@@ -218,8 +238,14 @@ void selectStage()
     }
     if (_exitButton.isInside())
     {
-      saveScore(scoreData);
-      exit();
+      if (saveScore(scoreData))
+      {
+        println("保存しました。");
+        exit();
+      } else
+      {
+        println("保存に失敗しました。");
+      }
     }
     for (Button _stageButton : stageButtons)
     {
@@ -475,7 +501,13 @@ void score()
     scoreTime = nowTime() - startTime;
     if (!stage.equals("?"))
     {
-      scoreData[int(stage)-1] = min(scoreData[int(stage)-1], scoreTime);
+      if (scoreData[int(stage)-1] == 0)
+      {
+        scoreData[int(stage)-1] = scoreTime;
+      } else
+      {
+        scoreData[int(stage)-1] = min(scoreData[int(stage)-1], scoreTime);
+      }
     }
   }
   background(0);
