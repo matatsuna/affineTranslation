@@ -15,7 +15,7 @@ boolean preMousePressed ;
 
 boolean log = true;
 
-int mode = 2;
+int mode = 1;
 
 ArrayList<Button> stageButtons;
 
@@ -28,7 +28,8 @@ int[] scoreData;
 File file;
 
 String stage;
-void setup() {
+void setup()
+{
   size(1200, 800);
   buttons = setButtons();
   stageButtons = stageButton();
@@ -41,7 +42,8 @@ void setup() {
 
   scoreData = new int [10];
   file = new File(sketchPath("scoreData.json"));
-  if (file.exists()) {
+  if (file.exists()) 
+  {
     scoreData = loadScore(file);
   }
 
@@ -49,43 +51,84 @@ void setup() {
 }
 
 
-void draw() {
-  if (mode == 1) {
+void draw() 
+{
+  if (mode == 1)
+  {
     top();
-  } else if (mode == 2) {
+  } else if (mode == 2) 
+  {
     selectStage();
-  } else if (mode == 3) {
+  } else if (mode == 3) 
+  {
     game();
-  } else if (mode == 4) {
+  } else if (mode == 4) 
+  {
     score();
+  } else if (mode==5) 
+  {
+    help();
   }
 }
 
-void top() {
+void top() 
+{
   background(0);
   textAlign(CENTER);
   textSize(50);
   stroke(200);
-  text("affineTranslation!", width/2, height/2);
+  text("affineTranslation!", width/2, height/4);
   Button _button = new Button(
     (width-400)/2, height/3*2, 400, 100, "SELECT STAGE", 50
     );
-  _button.draw();
 
-  if (mousePressed) {
-    if (log) {
+  Button _helpButton = new Button(
+    (width-200), height-100, 50, 50, "?", 30
+    );
+  _helpButton.isCircle = true;
+
+  if (_button.isInside()) 
+  {
+    _button.setColor(100, 100, 100);
+  }
+
+  if (_helpButton.isInside())
+  {
+    _helpButton.setColor(100, 100, 100);
+  }
+
+  if (mousePressed)
+  {
+    if (log) 
+    {
       println("mouse ok");
     }
-    if (_button.isInside()) {
-      if (log) {
+    if (_button.isInside()) 
+    {
+      if (log) 
+      {
         println("inside ok");
       }
       mode = 2;
     }
+    if (_helpButton.isInside())
+    {
+      mode = 5;
+    }
   }
+  _button.draw();
+  _helpButton.draw();
 }
 
-void selectStage() {
+void help()
+{
+  background(0);
+  //ここを書く
+}
+
+
+void selectStage()
+{
   background(0);
   textAlign(CENTER);
   textSize(50);
@@ -101,21 +144,29 @@ void selectStage() {
     width-210, height/5*4, 200, 100, "EXIT", 50
     );
 
-  for (Button _stageButton : stageButtons) {
-    if (_stageButton.isInside()) {
+  for (Button _stageButton : stageButtons) 
+  {
+    if (_stageButton.isInside()) 
+    {
       _stageButton.setColor(200, 100, 100);
-    } else {
+    } else 
+    {
       _stageButton.setColor(0, 0, 0);
     }
-    if (_stageButton.selected) {
+    if (_stageButton.selected)
+    {
       _stageButton.setColor(255, 0, 0);
     }
     _stageButton.draw();
   }
-  for (Button _stageButton : stageButtons) {
-    if (_stageButton.isInside()) {
-      if (!_stageButton.content.equals("?")) {
-        if (scoreData[int(_stageButton.content)-1]!=0) {
+  for (Button _stageButton : stageButtons) 
+  {
+    if (_stageButton.isInside()) 
+    {
+      if (!_stageButton.content.equals("?")) 
+      {
+        if (scoreData[int(_stageButton.content)-1]!=0) 
+        {
           textSize(30);
           text("Score:"+str(scoreData[int(_stageButton.content)-1]), mouseX+80, mouseY+40);
         }
@@ -123,23 +174,31 @@ void selectStage() {
     }
   }
 
-  if (_startButton.isInside()) {
+  if (_startButton.isInside()) 
+  {
     _startButton.setColor(100, 100, 100);
   }
 
-  if (_backButton.isInside()) {
+  if (_backButton.isInside()) 
+  {
     _backButton.setColor(100, 100, 200);
   }
 
-  if (_exitButton.isInside()) {
+  if (_exitButton.isInside()) 
+  {
     _exitButton.setColor(100, 200, 100);
   }
 
-  if (mousePressed) {
-    if (_startButton.isInside()) {
-      for (Button _stageButton : stageButtons) {
-        if (_stageButton.selected) {
-          if (log) {
+  if (mousePressed) 
+  {
+    if (_startButton.isInside()) 
+    {
+      for (Button _stageButton : stageButtons)
+      {
+        if (_stageButton.selected)
+        {
+          if (log)
+          {
             println("gameの初期化");
           }
           //ターゲットの文字を設定する
@@ -153,18 +212,23 @@ void selectStage() {
         }
       }
     }
-    if (_backButton.isInside()) {
+    if (_backButton.isInside())
+    {
       mode = 1;
     }
-    if (_exitButton.isInside()) {
+    if (_exitButton.isInside())
+    {
       saveScore(scoreData);
       exit();
     }
-    for (Button _stageButton : stageButtons) {
+    for (Button _stageButton : stageButtons)
+    {
       _stageButton.selected = false;
     }
-    for (Button _stageButton : stageButtons) {
-      if (_stageButton.isInside()) {
+    for (Button _stageButton : stageButtons) 
+    {
+      if (_stageButton.isInside()) 
+      {
         _stageButton.selected = true;
       }
     }
@@ -173,30 +237,37 @@ void selectStage() {
   _backButton.draw();
   _exitButton.draw();
 }
-void loadMap(String _str) {
-  if (_str.equals("1")) {
+void loadMap(String _str) 
+{
+  if (_str.equals("1")) 
+  {
     myTranslate(2.0, 0);
   }
-  if (_str.equals("2")) {
+  if (_str.equals("2")) 
+  {
     myTranslate(2.0, 0);
     myTranslate(0.0, 3.0);
   }
-  if (_str.equals("3")) {
+  if (_str.equals("3")) 
+  {
     myRotate(radians(30));
     myTranslate(2.0, 3.0);
   }
-  if (_str.equals("4")) {
+  if (_str.equals("4")) 
+  {
     myRotate(radians(20));
     myTranslate(4.0, 1.0);
     myRotate(radians(30));
   }
-  if (_str.equals("5")) {
+  if (_str.equals("5")) 
+  {
     myTranslate(1.0, -3.0);
     myRotate(radians(10));
     myTranslate(2.0, 1.0);
     myRotate(radians(60));
   }
-  if (_str.equals("6")) {
+  if (_str.equals("6")) 
+  {
     myScale(2.0);
     myTranslate(1.0, 3.0);
     myRotate(radians(10));
@@ -205,7 +276,8 @@ void loadMap(String _str) {
     myTranslate(-5.0, -6.0);
     myScale(0.3);
   }
-  if (_str.equals("7")) {
+  if (_str.equals("7")) 
+  {
     //青色の座標変換
     GL3R _matrix;
     _matrix = new GL3R(
@@ -215,7 +287,8 @@ void loadMap(String _str) {
       );
 
     ArrayList<Path> newFigure =  new ArrayList<Path>();
-    for (Path path : originalFigure) {
+    for (Path path : originalFigure) 
+    {
       newFigure.add( _matrix.moveByMatrix(path));
     }
     originalFigure = newFigure;
@@ -229,7 +302,8 @@ void loadMap(String _str) {
     myTranslate(-3.0, -4.0);
     myScale(0.5);
   }
-  if (_str.equals("8")) {
+  if (_str.equals("8")) 
+  {
     //青色の座標変換
     GL3R _matrix;
     _matrix = new GL3R(
@@ -239,7 +313,8 @@ void loadMap(String _str) {
       );
 
     ArrayList<Path> newFigure =  new ArrayList<Path>();
-    for (Path path : originalFigure) {
+    for (Path path : originalFigure) 
+    {
       newFigure.add( _matrix.moveByMatrix(path));
     }
     originalFigure = newFigure;
@@ -249,7 +324,8 @@ void loadMap(String _str) {
     myRotate(-radians(40));
     myTranslate(2.0, 1.0);
   }
-  if (_str.equals("9")) {
+  if (_str.equals("9")) 
+  {
     //青色の座標変換
     GL3R _matrix;
     float theta = radians(105);
@@ -260,7 +336,8 @@ void loadMap(String _str) {
       );
 
     ArrayList<Path> newFigure =  new ArrayList<Path>();
-    for (Path path : originalFigure) {
+    for (Path path : originalFigure) 
+    {
       newFigure.add( _matrix.moveByMatrix(path));
     }
     originalFigure = newFigure;
@@ -271,7 +348,8 @@ void loadMap(String _str) {
     myRotate(-radians(105));
     myTranslate(5.0, 2.0);
   }
-  if (_str.equals("10")) {
+  if (_str.equals("10")) 
+  {
     //青色の座標変換
     GL3R _matrix;
     float theta = radians(75);
@@ -288,7 +366,8 @@ void loadMap(String _str) {
       );
     _matrix = prod(_matrix1, _matrix2);
     ArrayList<Path> newFigure =  new ArrayList<Path>();
-    for (Path path : originalFigure) {
+    for (Path path : originalFigure) 
+    {
       newFigure.add( _matrix.moveByMatrix(path));
     }
     originalFigure = newFigure;
@@ -299,9 +378,12 @@ void loadMap(String _str) {
     myRotate(radians(105));
     myTranslate(10.0, 8.0);
   }
-  if (_str.equals("?")) {
-    for (int i=0; i<(int)random(1, 5); i++) {
-      switch((int)random(3)) {
+  if (_str.equals("?")) 
+  {
+    for (int i=0; i<(int)random(1, 5); i++) 
+    {
+      switch((int)random(3)) 
+      {
       case 0:
         myTranslate(random(5), random(5));
       case 1:
@@ -312,7 +394,8 @@ void loadMap(String _str) {
     }
   }
 }
-ArrayList<Button> stageButton() {
+ArrayList<Button> stageButton()
+{
   ArrayList<Button> _stageButtons = new ArrayList();
 
   Button _button;
@@ -384,11 +467,14 @@ ArrayList<Button> stageButton() {
   return _stageButtons;
 }
 
-void score() {
-  if (scoreFlag) {
+void score() 
+{
+  if (scoreFlag)
+  {
     scoreFlag = false;
     scoreTime = nowTime() - startTime;
-    if (!stage.equals("?")) {
+    if (!stage.equals("?"))
+    {
       scoreData[int(stage)-1] = min(scoreData[int(stage)-1], scoreTime);
     }
   }
@@ -402,11 +488,14 @@ void score() {
   Button nextButton = new Button(
     (width-200)/2, height/5*4, 200, 100, "NEXT", 50
     );
-  if (nextButton.isInside()) {
+  if (nextButton.isInside()) 
+  {
     nextButton.setColor(100, 100, 100);
   }
-  if (mousePressed) {
-    if (nextButton.isInside()) {
+  if (mousePressed) 
+  {
+    if (nextButton.isInside()) 
+    {
       stageButtons = stageButton();
       mode = 2;
     }
@@ -414,25 +503,31 @@ void score() {
   nextButton.draw();
 }
 
-void game() {
+void game()
+{
 
   //行列の計算
   GL3R matrix = new GL3R();
 
-  if (matrixs.size() == 0) {
+  if (matrixs.size() == 0) 
+  {
     matrix = new GL3R(
       1, 0, 0, 
       0, 1, 0, 
       0, 0, 1
       );
-  } else if (matrixs.size() == 1) {
-
+  } else if (matrixs.size() == 1) 
+  {
     matrix = matrixs.get(0);
-  } else if (matrixs.size()>1) {
-    for (int i=0; i<matrixs.size()-1; i++) {
-      if (i==0) {
+  } else if (matrixs.size()>1)
+  {
+    for (int i=0; i<matrixs.size()-1; i++) 
+    {
+      if (i==0) 
+      {
         matrix = prod(matrixs.get(0), matrixs.get(1));
-      } else {
+      } else 
+      {
         matrix = prod(matrix, matrixs.get(i+1));
       }
     }
@@ -442,58 +537,78 @@ void game() {
   myp.drawAxis();
 
 
-  for (Button _button : buttons) {
+  for (Button _button : buttons) 
+  {
     _button.draw();
   }
 
-  if (!preMousePressed && mousePressed) {
+  if (!preMousePressed && mousePressed) 
+  {
     preMousePressed = true;
-    for (Button _button : buttons) {
-
-      if (_button.isInside()) {
-
-        if (_button.content .equals("↑")) {
-          if (log) {
+    for (Button _button : buttons) 
+    {
+      if (_button.isInside()) 
+      {
+        if (_button.content .equals("↑")) 
+        {
+          if (log) 
+          {
             println(_button.content);
           }
           myTranslate(0, 0.05);
-        } else if (_button.content.equals("↓")) {
-          if (log) {
+        } else if (_button.content.equals("↓")) 
+        {
+          if (log)
+          {
             println(_button.content);
           }
           myTranslate(0, -0.05);
-        } else if (_button.content.equals("←")) {
-          if (log) {
+        } else if    (_button.content.equals("←")) 
+        {
+          if (log)
+          {
             println(_button.content);
           }
           myTranslate(-0.05, 0);
-        } else if (_button.content.equals("→")) {
-          if (log) {
+        } else if (_button.content.equals("→")) 
+        {
+          if (log) 
+          {
             println(_button.content);
           }
           myTranslate(0.05, 0);
-        } else if (_button.content.equals("Left")) {
-          if (log) {
+        } else if (_button.content.equals("Left"))
+        {
+          if (log) 
+          {
             println(_button.content);
           }
           myRotate(radians(3));
-        } else if (_button.content.equals("Right")) {
-          if (log) {
+        } else if (_button.content.equals("Right"))
+        {
+          if (log) 
+          {
             println(_button.content);
           }
           myRotate(-radians(3));
-        } else if (_button.content.equals("-")) {
-          if (log) {
+        } else if (_button.content.equals("-"))
+        {
+          if (log) 
+          {
             println(_button.content);
           }
           myScale(98.0/100.0);
-        } else if (_button.content.equals("+")) {
-          if (log) {
+        } else if (_button.content.equals("+")) 
+        {
+          if (log)
+          {
             println(_button.content);
           }
           myScale(102.0/100.0);
-        } else if (_button.content.equals("BACK")) {
-          if (log) {
+        } else if (_button.content.equals("BACK"))
+        {
+          if (log)
+          {
             println(_button.content);
           }
           stageButtons = stageButton();
@@ -501,7 +616,8 @@ void game() {
         }
       }
     }
-  } else {
+  } else 
+  {
     preMousePressed = false;
   }
 
@@ -509,7 +625,8 @@ void game() {
   strokeWeight(3);
 
   // draw 'FMS'
-  for (Path path : originalFigure) {
+  for (Path path : originalFigure) 
+  {
     path.drawPath();
   }
 
@@ -518,7 +635,8 @@ void game() {
   translatedFigure = new ArrayList<Path>();
   ArrayList<Path> originFigure = new ArrayList<Path>();
   originFigure = setFMSArray();
-  for (Path path : originFigure) {
+  for (Path path : originFigure)
+  {
     translatedFigure.add( matrix.moveByMatrix(path));
   }
 
@@ -526,19 +644,24 @@ void game() {
   stroke(255, 128, 128);
   strokeWeight(3);
   float distPath= 0;
-  for (int i = 0; i<translatedFigure.size(); i++) {
+  for (int i = 0; i<translatedFigure.size(); i++) 
+  {
     Path path = translatedFigure.get(i);
     distPath += path.compareDist(originalFigure.get(i));
     path.drawPath();
   }
-  if (log) {
+  if (log) 
+  {
     println("すべての文字に対しての距離", distPath);
   }
-  if (distPath < 1.0) {
+  if (distPath < 1.0) 
+  {
+    //終了条件クリア条件
     mode = 4;
   }
 }
-ArrayList<Button> setButtons() {
+ArrayList<Button> setButtons()
+{
   //各種ボタンの初期設定
   ArrayList<Button> _buttons = new ArrayList<Button>();
   //Button _button;
@@ -598,8 +721,10 @@ ArrayList<Button> setButtons() {
 
   return _buttons;
 }
-void setFMS() {
-  if (log) {
+void setFMS() 
+{
+  if (log) 
+  {
     println("originalFigure/translatedFigureの初期化");
   }
   originalFigure = new ArrayList<Path>();
@@ -633,7 +758,8 @@ void setFMS() {
   originalPath.addPVector(new PVector(2.2, 0));
   originalFigure.add(originalPath);
 }
-ArrayList<Path> setFMSArray() {
+ArrayList<Path> setFMSArray()
+{
   ArrayList<Path> _originalFigure = new ArrayList<Path>();
   /// FMS!のsetup追加
   Path originalPath;
@@ -667,7 +793,8 @@ ArrayList<Path> setFMSArray() {
   return _originalFigure;
 }
 
-int nowTime() {
+int nowTime() 
+{
   //現在の時間を返す
   int day = day();
   int hour = hour();
@@ -677,8 +804,10 @@ int nowTime() {
   return timestamp;
 }
 
-boolean saveScore(int [] _scoredata) {
-  try {
+boolean saveScore(int [] _scoredata) 
+{
+  try 
+  {
     JSONObject json = new JSONObject();
     json.setInt("1", _scoredata[0]);
     json.setInt("2", _scoredata[1]);
@@ -693,15 +822,19 @@ boolean saveScore(int [] _scoredata) {
 
     saveJSONObject(json, "scoreData.json");
   }
-  catch(Exception e) {
+  catch(Exception e) 
+  {
     return false;
   }
   return true;
 }
-int [] loadScore(File _file) {
+int [] loadScore(File _file)
+{
   int [] _scoredata = new int [10];
-  try {
-    if (_file.exists()) {
+  try 
+  {
+    if (_file.exists()) 
+    {
       JSONObject json = loadJSONObject(_file.getPath());
       _scoredata[0] = int(json.getInt("1"));
       _scoredata[1] = int(json.getInt("2"));
@@ -715,7 +848,8 @@ int [] loadScore(File _file) {
       _scoredata[9] = int(json.getInt("10"));
     }
   }
-  catch (Exception e) {
+  catch (Exception e) 
+  {
     println(e);
   }
   return _scoredata;

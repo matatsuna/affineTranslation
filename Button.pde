@@ -1,4 +1,5 @@
-class Button {
+class Button
+{
   int x=0;
   int y=0;
   int w=0;
@@ -10,8 +11,10 @@ class Button {
   int m_iCommand = 0;
   int fontSize = 0;
   boolean selected = false;
+  boolean isCircle = false;
 
-  Button( int _x, int _y, int _w, int _h, String _content, int _fontSize) {
+  Button( int _x, int _y, int _w, int _h, String _content, int _fontSize) 
+  {
     x = _x;
     y = _y;
     w = _w;
@@ -20,30 +23,41 @@ class Button {
     fontSize =  _fontSize ;
   }
 
-  void setColor( int _r, int _g, int _b ) {
+  void setColor( int _r, int _g, int _b )
+  {
     red = _r;
     green = _g;
     blue = _b;
   }
 
-  void draw() {
+  void draw() 
+  {
     fill(red, green, blue);
-    rect( x, y, w, h );
+    if (isCircle) 
+    {
+      ellipse( x+w/2, y+h/2, w, h );
+    }
+    else
+    {
+      rect( x, y, w, h );
+    }
     fill(255);
     textSize(fontSize);
     textAlign(CENTER);
     text( content, x+w/2, y+(h+fontSize)/2 );
   }
 
-  boolean isInside() {
+  boolean isInside()
+  {
     int _x = mouseX;
     int _y = mouseY;
-    if ( _x >= x && _x <= x + w) {
-      if ( _y >= y && _y <= y + h ) {
+    if ( _x >= x && _x <= x + w) 
+    {
+      if ( _y >= y && _y <= y + h ) 
+      {
         return true;
       }
     }
     return false;
   }
-
 }

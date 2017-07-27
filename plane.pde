@@ -1,19 +1,27 @@
-class Plane {
-  //基準線を書くだけ
+class Plane 
+{
+  //基準線を書くだけっぽい
   int cX, cY;
   int unit;
-  Plane() {
+  Plane() 
+  {
     cX=400;
     cY=400;
     unit=50;
   }
-  int X(float a) {
+  
+  int X(float a) 
+  {
     return int(cX+a*unit);
   }
-  int Y(float a) {
+  
+  int Y(float a) 
+  {
     return int(cY-a*unit);
   }
-  void drawAxis() {
+  
+  void drawAxis() 
+  {
     stroke(200);
     strokeWeight(1);
     int a=int(min(cX,cY)/unit);
